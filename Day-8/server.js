@@ -1,12 +1,16 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import postRoutes from './server/routes/post.js'
 dotenv.config()
 
 const app = express()
 
 //Middleware
 app.use(express.json())
+
+//Routes
+app.use('/api/posts/', postRoutes)
 
 //Connect to MOngoDB
 mongoose
