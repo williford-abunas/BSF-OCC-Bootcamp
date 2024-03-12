@@ -8,6 +8,15 @@ const app = express()
 
 //Middleware
 app.use(express.json())
+app.use((req, res, next) => {
+  console.log(req.path, req.method)
+
+  if (req.body) {
+    console.log('Request body:')
+    console.log(req.body)
+  }
+  next()
+})
 
 //Routes
 app.use('/api/posts/', postRoutes)
