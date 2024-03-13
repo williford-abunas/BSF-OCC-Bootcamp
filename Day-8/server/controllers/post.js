@@ -6,13 +6,9 @@ export const createPost = async (req, res) => {
 
   try {
     const post = await Post.create({
-      title,
-      author,
-      description,
-      likes,
-      comments,
+      ...req.body,
     })
-    res.status(200).json(post)
+    res.status(201).json(post)
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
@@ -36,7 +32,7 @@ export const getSinglePost = async (req, res) => {
   const { id } = req.params
   try {
     const post = await Post.findById({ _id: id })
-    if (!post) return res.status(400).json({ error: 'No post found.' })
+    if (!post) return res.status(404).json({ error: 'No matching post found!' })
     res.status(200).json(post)
   } catch (error) {
     res.status(400).json({ error: error.message })
@@ -63,7 +59,7 @@ export const updatePost = async (req, res) => {
       post,
     })
   } catch (error) {
-    res.status(404).json({ error: error.message })
+    res.status(400).json({ error: error.message })
   }
 }
 
