@@ -2,6 +2,8 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import postRoutes from './server/routes/post.js'
+import userRoutes from './server/routes/user.js'
+// import { authMiddleWare } from './server/middleware/authMiddleWare.js'
 dotenv.config()
 
 const app = express()
@@ -20,6 +22,7 @@ app.use((req, res, next) => {
 
 //Routes
 app.use('/api/posts/', postRoutes)
+app.use('/api/users/', userRoutes)
 
 //Connect to MOngoDB
 mongoose

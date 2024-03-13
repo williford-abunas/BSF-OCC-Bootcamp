@@ -36,7 +36,7 @@ export const getSinglePost = async (req, res) => {
   const { id } = req.params
   try {
     const post = await Post.findById({ _id: id })
-    if (!post) return res.status(404).json({ error: 'No post found.' })
+    if (!post) return res.status(400).json({ error: 'No post found.' })
     res.status(200).json(post)
   } catch (error) {
     res.status(400).json({ error: error.message })
@@ -53,11 +53,10 @@ export const updatePost = async (req, res) => {
       { ...req.body },
       { new: true, runValidators: true }
     )
-    if (!post) {
+    if (!post)
       return res.status(404).json({
         error: 'No matching post found!',
       })
-    }
 
     res.status(200).json({
       message: 'The post has been updated.',
@@ -75,7 +74,7 @@ export const deletePost = async (req, res) => {
   try {
     const post = await Post.findByIdAndDelete({ _id: id })
     if (!post)
-      res.status(404).json({
+      return res.status(404).json({
         error: 'No matching post found!',
       })
     res.status(200).json({
